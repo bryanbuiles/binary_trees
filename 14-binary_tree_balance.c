@@ -6,19 +6,30 @@
  * Return: int
  */
 
+size_t binary_tree_height(const binary_tree_t *tree);
+
 int binary_tree_balance(const binary_tree_t *tree)
 {
-	int sumleft = 0, sumright = 0;
-
-	if (!tree)
+	if (tree == NULL)
 		return (0);
 
-	sumleft = binary_tree_balance(tree->left);
-	if (tree->left == NULL)
-		sumleft--;
-	sumright = binary_tree_balance(tree->right);
-	if (tree->right == NULL)
-		sumright--;
+	return (binary_tree_height(tree->left) -
+			binary_tree_height(tree->right));
+}
 
-	return (sumleft - sumright);
+size_t binary_tree_height(const binary_tree_t *tree)
+{
+	size_t left = 0, rigth = 0;
+
+	if (tree == NULL || (tree->left == NULL && tree->right == NULL))
+		return (0);
+
+	left = binary_tree_height(tree->left) + 1;
+	rigth = binary_tree_height(tree->right) + 1;
+
+	if (rigth > left)
+		return (rigth);
+	else
+		return (left);
+	return (0);
 }
